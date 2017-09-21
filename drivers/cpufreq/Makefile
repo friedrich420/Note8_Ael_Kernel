@@ -14,6 +14,8 @@ obj-$(CONFIG_CPU_FREQ_GOV_INTERACTIVE)	+= cpufreq_interactive.o
 obj-$(CONFIG_CPU_FREQ_GOV_COMMON)		+= cpufreq_governor.o
 obj-$(CONFIG_CPU_FREQ_GOV_ATTR_SET)	+= cpufreq_governor_attr_set.o
 
+obj-$(CONFIG_CPU_FREQ_GOV_BLUACTIVE)	+= cpufreq_bluactive.o
+
 obj-$(CONFIG_CPUFREQ_DT)		+= cpufreq-dt.o
 
 ##################################################################################

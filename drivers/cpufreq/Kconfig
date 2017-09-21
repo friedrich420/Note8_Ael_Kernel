@@ -129,6 +129,12 @@ config CPU_FREQ_DEFAULT_GOV_SCHEDUTIL
 	  have a look at the help section of that governor. The fallback
 	  governor will be 'performance'.
 
+config CPU_FREQ_DEFAULT_GOV_BLUACTIVE
+	bool "bluactive"
+	select CPU_FREQ_GOV_BLUACTIVE
+	help
+	Use the CPUFreq governor 'bluactive' as default.
+
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -244,6 +250,12 @@ config CPU_FREQ_GOV_SCHEDUTIL
 	  be called cpufreq_schedutil.
 
 	  If in doubt, say N.
+
+config CPU_FREQ_GOV_BLUACTIVE
+	tristate "'bluactive' cpufreq governor"
+	depends on CPU_FREQ
+	help
+	  'bluactive' - less aggressive version of conservative
 
 config FREQVAR_SCHEDTUNE
 	depends on CPU_FREQ_GOV_SCHEDUTIL
