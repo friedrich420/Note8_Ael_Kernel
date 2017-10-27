@@ -75,7 +75,6 @@ static int f2fs_derive_key_aes(char deriving_key[F2FS_AES_128_ECB_KEY_SIZE],
 					F2FS_AES_256_XTS_KEY_SIZE, NULL);
 	res = crypto_ablkcipher_encrypt(req);
 	if (res == -EINPROGRESS || res == -EBUSY) {
-		BUG_ON(req->base.data != &ecr);
 		wait_for_completion(&ecr.completion);
 		res = ecr.res;
 	}
