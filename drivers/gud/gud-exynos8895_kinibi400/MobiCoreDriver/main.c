@@ -759,3 +759,4 @@ module_exit(mobicore_exit);
 MODULE_AUTHOR("Trustonic Limited");
 MODULE_LICENSE("GPL v2");
 MODULE_DESCRIPTION("MobiCore driver");
+

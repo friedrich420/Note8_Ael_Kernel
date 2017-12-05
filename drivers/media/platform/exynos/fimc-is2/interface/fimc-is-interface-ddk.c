@@ -742,15 +742,12 @@ void fimc_is_lib_isp_stop(struct fimc_is_hw_ip *hw_ip,
 	BUG_ON(!this->func);
 	BUG_ON(!this->object);
 
-	info_lib("[%d][ID:%d] try to suspend ddk object...", instance_id, hw_ip->id);
-
 	ret = CALL_LIBOP(this, stop, this->object, instance_id);
 	if (ret) {
-		pr_cont(" failed! (%d)\n", ret);
+		err_lib("object_suspend fail (%d)", hw_ip->id);
 		return;
 	}
-
-	pr_cont(" done!\n");
+	info_lib("[%d]object_suspend done [ID:%d]\n", instance_id, hw_ip->id);
 
 	return;
 }

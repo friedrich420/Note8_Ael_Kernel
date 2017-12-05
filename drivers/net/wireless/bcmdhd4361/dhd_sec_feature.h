@@ -113,13 +113,11 @@
 #define ARGOS_P2P_TABLE_LABEL "P2P"
 #endif /* CONFIG_ARGOS */
 
-#ifndef DHD_LB_IRQSET
 #if defined(CONFIG_ARCH_MSM8998)
 #define SET_PCIE_IRQ_CPU_CORE
 #define PCIE_IRQ_BIG_CORE 6
 #define PCIE_IRQ_LITTLE_CORE 0
-#endif /* CONFIG_ARCH_MSM8998 */
-#endif /* DHD_LB_IRQSET */
+#endif
 
 /* PROJECTS START */
 

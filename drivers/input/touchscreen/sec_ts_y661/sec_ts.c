@@ -14,6 +14,11 @@ struct sec_ts_data *tsp_info;
 
 #include "sec_ts.h"
 
+#if defined(CONFIG_SEC_ABC)
+#include <linux/sec_abc.h>
+#define ABC_GHOST_TOUCH_HOLDING_TIME_BASE 60
+#endif
+
 #ifdef CONFIG_SECURE_TOUCH
 enum subsystem {
 	TZ = 1,
@@ -458,6 +463,9 @@ int sec_ts_i2c_write(struct sec_ts_data *ts, u8 reg, u8 *data, int len)
 		if (retry > 1) {
 			input_err(true, &ts->client->dev, "%s: I2C retry %d\n", __func__, retry + 1);
 			ts->comm_err_count++;
+#if defined(CONFIG_SEC_ABC)
+			sec_abc_send_event("MODULE=tsp@ERROR=i2c_fail");
+#endif
 		}
 	}
 
@@ -536,6 +544,9 @@ int sec_ts_i2c_read(struct sec_ts_data *ts, u8 reg, u8 *data, int len)
 			if (retry > 1) {
 				input_err(true, &ts->client->dev, "%s: I2C retry %d\n", __func__, retry + 1);
 				ts->comm_err_count++;
+#if defined(CONFIG_SEC_ABC)
+				sec_abc_send_event("MODULE=tsp@ERROR=i2c_fail");
+#endif
 			}
 		}
 
@@ -559,6 +570,9 @@ int sec_ts_i2c_read(struct sec_ts_data *ts, u8 reg, u8 *data, int len)
 			if (retry > 1) {
 				input_err(true, &ts->client->dev, "%s: I2C retry %d\n", __func__, retry + 1);
 				ts->comm_err_count++;
+#if defined(CONFIG_SEC_ABC)
+				sec_abc_send_event("MODULE=tsp@ERROR=i2c_fail");
+#endif
 			}
 		}
 
@@ -584,6 +598,9 @@ int sec_ts_i2c_read(struct sec_ts_data *ts, u8 reg, u8 *data, int len)
 				if (retry > 1) {
 					input_err(true, &ts->client->dev, "%s: I2C retry %d\n", __func__, retry + 1);
 					ts->comm_err_count++;
+#if defined(CONFIG_SEC_ABC)
+					sec_abc_send_event("MODULE=tsp@ERROR=i2c_fail");
+#endif
 				}
 			}
 
@@ -634,6 +651,9 @@ static int sec_ts_i2c_write_burst(struct sec_ts_data *ts, u8 *data, int len)
 		if (retry > 1) {
 			input_err(true, &ts->client->dev, "%s: I2C retry %d\n", __func__, retry + 1);
 			ts->comm_err_count++;
+#if defined(CONFIG_SEC_ABC)
+			sec_abc_send_event("MODULE=tsp@ERROR=i2c_fail");
+#endif
 		}
 	}
 
@@ -685,6 +705,9 @@ static int sec_ts_i2c_read_bulk(struct sec_ts_data *ts, u8 *data, int len)
 			if (retry > 1) {
 				input_err(true, &ts->client->dev, "%s: I2C retry %d\n", __func__, retry + 1);
 				ts->comm_err_count++;
+#if defined(CONFIG_SEC_ABC)
+				sec_abc_send_event("MODULE=tsp@ERROR=i2c_fail");
+#endif
 			}
 		}
 
@@ -1165,6 +1188,11 @@ static void sec_ts_read_event(struct sec_ts_data *ts)
 						if (ts->time_longest < (ts->time_released[t_id].tv_sec
 								- ts->time_pressed[t_id].tv_sec))
 							ts->time_longest = (ts->time_released[t_id].tv_sec - ts->time_pressed[t_id].tv_sec);
+#if defined(CONFIG_SEC_ABC)
+						if ((ts->time_released[t_id].tv_sec - ts->time_pressed[t_id].tv_sec)
+								> ABC_GHOST_TOUCH_HOLDING_TIME_BASE)
+							sec_abc_send_event("MODULE=tsp@ERROR=ghost_touch_holding");
+#endif
 
 						ret = sec_ts_i2c_read(ts, SEC_TS_READ_FORCE_SIG_MAX_VAL, rbuf, 2);
 						if (ret < 0)
@@ -2399,6 +2427,11 @@ void sec_ts_unlocked_release_all_finger(struct sec_ts_data *ts)
 			if (ts->time_longest < (ts->time_released[i].tv_sec
 					- ts->time_pressed[i].tv_sec))
 				ts->time_longest = (ts->time_released[i].tv_sec - ts->time_pressed[i].tv_sec);
+#if defined(CONFIG_SEC_ABC)
+			if ((ts->time_released[i].tv_sec - ts->time_pressed[i].tv_sec)
+					> ABC_GHOST_TOUCH_HOLDING_TIME_BASE)
+				sec_abc_send_event("MODULE=tsp@ERROR=ghost_touch_holding");
+#endif
 		}
 
 		ts->coord[i].mcount = 0;
@@ -2453,6 +2486,11 @@ void sec_ts_locked_release_all_finger(struct sec_ts_data *ts)
 
 			if (ts->time_longest < (ts->time_released[i].tv_sec - ts->time_pressed[i].tv_sec))
 				ts->time_longest = (ts->time_released[i].tv_sec - ts->time_pressed[i].tv_sec);
+#if defined(CONFIG_SEC_ABC)
+			if ((ts->time_released[i].tv_sec - ts->time_pressed[i].tv_sec)
+					> ABC_GHOST_TOUCH_HOLDING_TIME_BASE)
+				sec_abc_send_event("MODULE=tsp@ERROR=ghost_touch_holding");
+#endif
 		}
 
 		ts->coord[i].mcount = 0;
@@ -3029,4 +3067,3 @@ MODULE_LICENSE("GPL");
 
 module_init(sec_ts_init);
 module_exit(sec_ts_exit);
-

@@ -404,7 +404,6 @@ int fimc_is_hw_vra_init(struct fimc_is_hw_ip *hw_ip,
 #endif
 
 		atomic_set(&hw_vra->ch1_count, 0);
-		spin_lock_init(&lib_vra->slock);
 	} else {
 		if (input_type != lib_vra->fr_work_init.dram_input) {
 			err_hw("[%d] input type is not matched - instance: %s, framework: %s",
