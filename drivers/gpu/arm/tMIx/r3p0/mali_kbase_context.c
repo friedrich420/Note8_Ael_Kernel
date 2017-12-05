@@ -315,10 +315,6 @@ void kbase_destroy_context(struct kbase_context *kctx)
 	if(kbdev->vendor_callbacks->destroy_context)
 		kbdev->vendor_callbacks->destroy_context(kctx);
 
-	if (kctx->ctx_need_qos) {
-		kctx->ctx_need_qos = false;
-	}
-
 	vfree(kctx);
 	/* MALI_SEC_INTEGRATION */
 	kctx = NULL;
@@ -364,3 +360,4 @@ int kbase_context_set_create_flags(struct kbase_context *kctx, u32 flags)
 	return err;
 }
 KBASE_EXPORT_SYMBOL(kbase_context_set_create_flags);
+

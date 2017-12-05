@@ -466,12 +466,11 @@ static ssize_t accel_calibration_info_show(struct device *dev,
 
 void set_AccelCalibrationInfoData(char *pchRcvDataFrame, int *iDataIdx)
 {
-	if (accelCalDataIndx < (CALDATATOTALMAX - 1)) {
+	if (accelCalDataIndx < (CALDATATOTALMAX - 1))
 		memcpy(accelCalDataInfo[++accelCalDataIndx],  pchRcvDataFrame + *iDataIdx, CALDATAFIELDLENGTH);
-		*iDataIdx += CALDATAFIELDLENGTH;
-	}
-}
 
+	*iDataIdx += CALDATAFIELDLENGTH;
+}
 
 static DEVICE_ATTR(name, 0440, accel_name_show, NULL);
 static DEVICE_ATTR(vendor, 0440, accel_vendor_show, NULL);
