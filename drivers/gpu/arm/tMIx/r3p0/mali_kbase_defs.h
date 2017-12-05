@@ -1506,7 +1506,6 @@ struct kbase_context {
 
 	/* MALI_SEC_INTEGRATION */
 	int ctx_status;
-	bool ctx_need_qos;
 	char name[CTX_NAME_SIZE];
 	/* MALI_SEC_INTEGRATION */
 	bool destroying_context;
@@ -1620,3 +1619,4 @@ struct job_descriptor_header {
 };
 
 #endif				/* _KBASE_DEFS_H_ */
+

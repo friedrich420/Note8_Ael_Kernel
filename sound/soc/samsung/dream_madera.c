@@ -1150,7 +1150,7 @@ static struct snd_soc_dai_link exynos8895_dai[] = {
 		.name = "VTS-Trigger",
 		.stream_name = "VTS-Trigger",
 		.cpu_dai_name = "vts-tri",
-		.platform_name = "vts_dma0",
+		.platform_name = "0.vts_dma",
 		.codec_name = "snd-soc-dummy",
 		.codec_dai_name = "snd-soc-dummy-dai",
 		.ignore_suspend = 1,
@@ -1161,7 +1161,7 @@ static struct snd_soc_dai_link exynos8895_dai[] = {
 		.name = "VTS-Record",
 		.stream_name = "VTS-Record",
 		.cpu_dai_name = "vts-rec",
-		.platform_name = "vts_dma1",
+		.platform_name = "1.vts_dma",
 		.codec_name = "snd-soc-dummy",
 		.codec_dai_name = "snd-soc-dummy-dai",
 		.ignore_suspend = 1,
@@ -1597,3 +1597,4 @@ module_platform_driver(exynos8895_audio_driver);
 MODULE_DESCRIPTION("ALSA SoC Exynos8895 Madera Driver");
 MODULE_LICENSE("GPL");
 MODULE_ALIAS("platform:exynos8895-madera");
+
