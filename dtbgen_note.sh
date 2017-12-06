@@ -36,7 +36,7 @@ hero2lte)
 	case $VARIANT in
 	xx|duos)
 		DTSFILES="exynos8895-greatlte_eur_open_00 exynos8895-greatlte_eur_open_01
-				exynos8895-greatlte_eur_open_02 exynos8895-greatlte_eur_open_03 exynos8895-greatlte_eur_open_05 
+				exynos8895-greatlte_eur_open_02 
 				exynos8895-greatlte_eur_open_06 exynos8895-greatlte_eur_open_07"
 		;;
 	*)
